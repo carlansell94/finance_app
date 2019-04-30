@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^api/v1/exchange_rates api/v1/exchange_rates.php
+RewriteRule ^api/v1/currencies api/v1/currencies.php
