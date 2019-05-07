@@ -4,7 +4,7 @@ namespace Finance\sync;
 
 use Finance\core\{Currency, ExchangeRate};
 
-require __DIR__ . '/../autoloader.php';
+require_once __DIR__ . '/../autoloader.php';
 
 final class ExchangeRateSourceXe extends ExchangeRateSync implements IExchangeRateSync
 {

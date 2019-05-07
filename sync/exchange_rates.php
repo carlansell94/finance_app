@@ -4,7 +4,7 @@ namespace Finance\sync;
 
 use Finance\core\Currency;
 
-require __DIR__ . "/../autoloader.php";
+require_once __DIR__ . "/../autoloader.php";
 
 $currency_list = Currency::getFullList();
 $currency_list->bind_result(

@@ -2,7 +2,7 @@
 
 namespace Finance\sync;
 
-require __DIR__ . '/../autoloader.php';
+require_once __DIR__ . '/../autoloader.php';
 
 abstract class Sync
 {

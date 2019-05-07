@@ -4,7 +4,7 @@ namespace Finance\api\v1;
 
 use Finance\core\{Currency, DataError, ExchangeRate};
 
-require __DIR__ . '/../../autoloader.php';
+require_once __DIR__ . '/../../autoloader.php';
 
 header('Content-Type: application/json');
 
