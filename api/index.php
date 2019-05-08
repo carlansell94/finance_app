@@ -44,6 +44,15 @@ $er_summary['data'][0]['rate'] = "rate";
 $er_summary['data'][0]['change']['value'] = "value";
 $er_summary['data'][0]['change']['percent'] = "percent";
 $er_summary = json_encode($er_summary, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+
+$stock_markets['data'][0]['id'] = "id";
+$stock_markets['data'][0]['name'] = "name";
+$stock_markets['data'][0]['symbol'] = "symbol";
+$stock_markets['data'][0]['exchange_name'] = "exchange_name";
+$stock_markets['data'][0]['exhange_symbol'] = "exchange_symbol";
+$stock_markets['data'][0]['exchange_suffix'] = "exchange_suffix*";
+$stock_markets = json_encode($stock_markets, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +72,7 @@ $er_summary = json_encode($er_summary, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
         <th>Header
         <th>Description
         <th>Optional Parameters
-        <th>Return JSON
+        <th>JSON
     <tr>
         <td>currencies
         <td>GET
@@ -92,39 +101,54 @@ $er_summary = json_encode($er_summary, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
         <td><ul><li>start_date<li>end_date</ul>
         <td><pre><?= $er_add; ?></pre>
     <tr>
-        <td>exchange_rates/{ID}
+        <td>exchange_rates/&#x200b;{ID}
         <td>GET
         <td>Retrieve the exchange rate with the provided ID.
         <td>
         <td><pre><?= $er_id; ?></pre>
     <tr>
-        <td>exchange_rates/{DATE}
+        <td>exchange_rates/&#x200b;{DATE}
         <td>GET
         <td>Retrieve all exchange rates for the provided date,
         <td>
         <td><pre><?= $er_date; ?></pre>
     <tr>
-        <td>exchange_rates/{CUR}
+        <td>exchange_rates/&#x200b;{CUR}
         <td>GET
         <td>Retrieve exchange rates for the provided currency.
         <td><ul><li>start_date<li>end_date</ul>
         <td><pre><?= $er_currency; ?></pre>
     <tr>
-        <td>exchange_rates/{CUR-CUR}
+        <td>exchange_rates/&#x200b;{CUR-CUR}
         <td>GET
         <td>Retrieve exchange rates for the provided currency pair.
         <td><ul><li>start_date<li>end_date</ul>
         <td><pre><?= $core; ?></pre>
     <tr>
-        <td>exchange_rates/summary
+        <td>exchange_rates/&#x200b;summary
         <td>GET
         <td>Retrieve the most recent exchange rate of a currency pair, and the change from the previous day.
         <td>
         <td><pre><?= $er_summary; ?></pre>
     <tr>
-        <td>exchange_rates/summary/major
+        <td>exchange_rates/&#x200b;summary/&#x200b;major
         <td>GET
         <td>Retrieve the most recent exchange rate of a currency pair, and the change from the previous day. Only returns rank 1 currencies (GBP, EUR, USD).
         <td>
         <td><pre><?= $er_summary; ?></pre>
+</table>
+<h2>Stock Markets</h2>
+<table>
+    <tr>
+        <th>URI
+        <th>Header
+        <th>Description
+        <th>Optional Parameters
+        <th>JSON
+    <tr>
+        <td>markets
+        <td>GET
+        <td>Retrieve all stock markets tracked by the application.
+        <td>
+        <td><pre><?= $stock_markets; ?></pre>
 </table>

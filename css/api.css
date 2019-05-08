@@ -43,20 +43,35 @@ pre {
 }
 
 th, td {
-    min-width: 150px;
     padding: 5px;
     border: 1px solid #ddd;
 }
 
-tr td:nth-child(1) {
-	text-indent: 15px;
+tr th:nth-child(1),
+tr th:nth-child(4) {
+    width: 200px;
+    min-width: 200px;
 }
 
-tr td:nth-last-child(1) {
-	padding-right: 20px;
+tr th:nth-child(2) {
+    min-width: 100px;
+    width: 100px;
+}
+
+tr th:nth-child(3) {
+    min-width: 300px;
+    width: 300px;
+}
+
+tr td:nth-child(1) {
+	padding-left: 15px;
 }
 
 tr td:nth-child(2) {
     text-align: center;
     font-weight: bold;
+}
+
+tr td:nth-last-child(1) {
+	padding-right: 20px;
 }
