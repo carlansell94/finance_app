@@ -2,6 +2,7 @@ A web based app designed to keep track of financial information.
 
 Features:  
 Exchange rate syncing  
+Stock market price syncing  
 Basic API  
 Mysqli database connector
 
