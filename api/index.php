@@ -51,7 +51,16 @@ $stock_markets['data'][0]['symbol'] = "symbol";
 $stock_markets['data'][0]['exchange_name'] = "exchange_name";
 $stock_markets['data'][0]['exhange_symbol'] = "exchange_symbol";
 $stock_markets['data'][0]['exchange_suffix'] = "exchange_suffix*";
+$stock_markets['data'][0]['timezone'] = "timezone";
+$stock_markets['data'][0]['open'] = "open";
+$stock_markets['data'][0]['close'] = "close";
 $stock_markets = json_encode($stock_markets, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+
+$stock_markets_constituents['data'][0]['stock_id'] = "stock_id";
+$stock_markets_constituents['data'][0]['stock_symbol'] = "stock_symbol";
+$stock_markets_constituents['data'][0]['stock_name'] = "stock_name";
+$stock_markets_constituents['data'][0]['stock_currency'] = "stock_currency";
+$stock_markets_constituents = json_encode($stock_markets_constituents, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 
 ?>
 
@@ -151,4 +160,10 @@ $stock_markets = json_encode($stock_markets, JSON_FORCE_OBJECT | JSON_PRETTY_PRI
         <td>Retrieve all stock markets tracked by the application.
         <td>
         <td><pre><?= $stock_markets; ?></pre>
+    <tr>
+        <td>markets/&#x200b;{SYMBOL}/&#x200b;constituents
+        <td>GET
+        <td>Retrieve the constituent stock symbols which form the provided stock market.
+        <td>
+        <td><pre><?= $stock_markets_constituents; ?></pre>
 </table>
