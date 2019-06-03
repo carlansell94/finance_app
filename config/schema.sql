@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2019 at 07:04 PM
--- Server version: 10.1.37-MariaDB-0+deb9u1
+-- Generation Time: May 19, 2019 at 12:54 PM
+-- Server version: 10.1.38-MariaDB-0+deb9u1
 -- PHP Version: 7.2.9-1+b2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -105,6 +105,77 @@ CREATE TABLE `ranking` (
   `ranking_name` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_exchanges`
+--
+
+CREATE TABLE `stock_exchanges` (
+  `exchange_id` int(2) NOT NULL,
+  `exchange_symbol` varchar(6) NOT NULL,
+  `exchange_name` varchar(32) NOT NULL,
+  `exchange_suffix` varchar(3) DEFAULT NULL,
+  `country_id` tinyint(3) NOT NULL,
+  `timezone` varchar(20) NOT NULL,
+  `open` time NOT NULL,
+  `close` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_markets`
+--
+
+CREATE TABLE `stock_markets` (
+  `market_id` tinyint(3) UNSIGNED NOT NULL,
+  `market_name` text NOT NULL,
+  `market_symbol` text NOT NULL,
+  `exchange_id` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_market_constituents`
+--
+
+CREATE TABLE `stock_market_constituents` (
+  `constituent_id` mediumint(8) UNSIGNED NOT NULL,
+  `stock_id` int(4) NOT NULL,
+  `market_id` tinyint(3) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_market_prices`
+--
+
+CREATE TABLE `stock_market_prices` (
+  `market_price_id` int(11) UNSIGNED NOT NULL,
+  `market_id` int(2) NOT NULL,
+  `date` date NOT NULL,
+  `price` decimal(8,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_symbol_list`
+--
+
+CREATE TABLE `stock_symbol_list` (
+  `stock_id` int(4) NOT NULL,
+  `stock_symbol` varchar(4) NOT NULL,
+  `stock_name` varchar(64) NOT NULL,
+  `stock_sector` varchar(24) DEFAULT NULL,
+  `stock_description` varchar(8192) DEFAULT NULL,
+  `stock_currency` varchar(3) NOT NULL,
+  `last_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -152,6 +223,41 @@ ALTER TABLE `ranking`
   ADD PRIMARY KEY (`ranking_id`);
 
 --
+-- Indexes for table `stock_exchanges`
+--
+ALTER TABLE `stock_exchanges`
+  ADD PRIMARY KEY (`exchange_id`),
+  ADD KEY `stock_exchanges_country_id` (`country_id`);
+
+--
+-- Indexes for table `stock_markets`
+--
+ALTER TABLE `stock_markets`
+  ADD PRIMARY KEY (`market_id`),
+  ADD KEY `stock_market_exchange` (`exchange_id`);
+
+--
+-- Indexes for table `stock_market_constituents`
+--
+ALTER TABLE `stock_market_constituents`
+  ADD PRIMARY KEY (`constituent_id`),
+  ADD UNIQUE KEY `stock_id` (`stock_id`,`market_id`);
+
+--
+-- Indexes for table `stock_market_prices`
+--
+ALTER TABLE `stock_market_prices`
+  ADD PRIMARY KEY (`market_price_id`),
+  ADD UNIQUE KEY `market_id-date` (`market_id`,`date`) USING BTREE;
+
+--
+-- Indexes for table `stock_symbol_list`
+--
+ALTER TABLE `stock_symbol_list`
+  ADD PRIMARY KEY (`stock_id`),
+  ADD KEY `market_currency` (`stock_currency`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -186,6 +292,36 @@ ALTER TABLE `ranking`
   MODIFY `ranking_id` tinyint(1) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `stock_exchanges`
+--
+ALTER TABLE `stock_exchanges`
+  MODIFY `exchange_id` int(2) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stock_markets`
+--
+ALTER TABLE `stock_markets`
+  MODIFY `market_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stock_market_constituents`
+--
+ALTER TABLE `stock_market_constituents`
+  MODIFY `constituent_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stock_market_prices`
+--
+ALTER TABLE `stock_market_prices`
+  MODIFY `market_price_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stock_symbol_list`
+--
+ALTER TABLE `stock_symbol_list`
+  MODIFY `stock_id` int(4) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -208,6 +344,18 @@ ALTER TABLE `currency_rates`
 --
 ALTER TABLE `issue_tracker`
   ADD CONSTRAINT `issue_tracker_issue_type_id` FOREIGN KEY (`issue_type`) REFERENCES `issue_types` (`issue_type_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `stock_exchanges`
+--
+ALTER TABLE `stock_exchanges`
+  ADD CONSTRAINT `stock_exchanges_country_id` FOREIGN KEY (`country_id`) REFERENCES `countries` (`country_id`);
+
+--
+-- Constraints for table `stock_markets`
+--
+ALTER TABLE `stock_markets`
+  ADD CONSTRAINT `stock_market_exchange` FOREIGN KEY (`exchange_id`) REFERENCES `stock_exchanges` (`exchange_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
