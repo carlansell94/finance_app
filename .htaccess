@@ -2,4 +2,3 @@ RewriteEngine On
 RewriteRule ^api/v1/exchange_rates api/v1/exchange_rates.php
 RewriteRule ^api/v1/currencies api/v1/currencies.php
 RewriteRule ^api/v1/markets api/v1/markets.php
-RewriteRule ^exchange_rates exchange_rates.php
