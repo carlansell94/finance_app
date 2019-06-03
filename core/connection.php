@@ -36,8 +36,8 @@ final class Connection implements IConnection
 
         try {
             $stmt->execute();
-        } catch (Exception $e) {
-            throw new DBException($e, $param);
+        } catch (\Exception $e) {
+            throw new DbException($e, $param);
         }
 
         return $stmt;

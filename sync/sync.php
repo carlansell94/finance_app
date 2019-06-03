@@ -2,7 +2,10 @@
 
 namespace Finance\sync;
 
+use Finance\core\Connection;
+
 require_once __DIR__ . '/../autoloader.php';
+require_once __DIR__ . '/../config/sync.php';
 
 abstract class Sync
 {
@@ -12,7 +15,7 @@ abstract class Sync
 
     public function __construct()
     {
-        $this->conn = \Finance\core\Connection::instance();
+        $this->conn = Connection::instance();
         $this->end_date = new \DateTime("midnight");
     }
 

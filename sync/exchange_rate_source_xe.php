@@ -88,7 +88,7 @@ final class ExchangeRateSourceXe extends ExchangeRateSync implements IExchangeRa
                 } else if ($this->fetch_date == $currency_date) {
                     $er->update();
                 }
-            } catch (DBException $e) {
+            } catch (DbException $e) {
                 // Do nothing, throwing DBException logs the issue
             }
         }

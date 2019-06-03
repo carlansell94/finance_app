@@ -4,9 +4,9 @@ namespace Finance\core;
 
 require_once __DIR__ . '/../autoloader.php';
 
-final class DBException extends Issue
+final class DbException extends Issue
 {
-    public function __construct(Exception $exception, array $params)
+    public function __construct(\Exception $exception, array $params)
     {
         parent::__construct();
         $error = debug_backtrace(4)[3];
