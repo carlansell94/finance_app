@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 19, 2019 at 12:54 PM
--- Server version: 10.1.38-MariaDB-0+deb9u1
+-- Generation Time: Jul 14, 2019 at 06:32 PM
+-- Server version: 10.3.15-MariaDB-1
 -- PHP Version: 7.2.9-1+b2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -62,7 +62,7 @@ CREATE TABLE `currency_rates` (
   `currency_1` tinyint(3) NOT NULL,
   `currency_2` tinyint(3) NOT NULL,
   `rate` decimal(14,10) NOT NULL,
-  `last_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -76,11 +76,11 @@ CREATE TABLE `issue_tracker` (
   `issue_type` tinyint(1) NOT NULL,
   `file` varchar(128) NOT NULL,
   `function` varchar(32) NOT NULL,
-  `params` varchar(64) NOT NULL,
+  `params` varchar(256) NOT NULL,
   `message` varchar(64) NOT NULL,
-  `issue_status` tinyint(1) NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+  `issue_status` tinyint(1) NOT NULL DEFAULT 0,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `last_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -125,6 +125,43 @@ CREATE TABLE `stock_exchanges` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `stock_financials`
+--
+
+CREATE TABLE `stock_financials` (
+  `stock_id` int(3) NOT NULL,
+  `financial_currency` varchar(3) DEFAULT NULL,
+  `number_of_shares` bigint(12) DEFAULT NULL,
+  `last_fiscal_year_end` date DEFAULT NULL,
+  `book_value` decimal(6,3) DEFAULT NULL,
+  `enterprise_value` bigint(13) DEFAULT NULL,
+  `trailing_eps` decimal(7,3) DEFAULT NULL,
+  `forward_eps` decimal(7,3) DEFAULT NULL,
+  `ebitda` bigint(12) DEFAULT NULL,
+  `gross_profit` bigint(12) DEFAULT NULL,
+  `ebitda_margin` decimal(6,5) DEFAULT NULL,
+  `gross_margin` decimal(10,5) DEFAULT NULL,
+  `profit_margin` decimal(10,5) DEFAULT NULL,
+  `earnings_quarterly_growth` decimal(6,3) DEFAULT NULL,
+  `revenue_growth` decimal(6,3) DEFAULT NULL,
+  `earnings_growth` decimal(6,3) DEFAULT NULL,
+  `beta` decimal(8,6) DEFAULT NULL,
+  `trailing_pe` decimal(10,5) DEFAULT NULL,
+  `forward_pe` decimal(10,5) DEFAULT NULL,
+  `current_ratio` decimal(6,3) DEFAULT NULL,
+  `return_on_assets` decimal(10,8) DEFAULT NULL,
+  `total_revenue` bigint(13) DEFAULT NULL,
+  `total_cash` int(13) DEFAULT NULL,
+  `total_debt` bigint(13) DEFAULT NULL,
+  `debt_to_equity` decimal(9,3) DEFAULT NULL,
+  `dividend_yield` decimal(6,5) DEFAULT NULL,
+  `forward_dividend` decimal(3,2) DEFAULT NULL,
+  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stock_markets`
 --
 
@@ -163,6 +200,20 @@ CREATE TABLE `stock_market_prices` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `stock_prices`
+--
+
+CREATE TABLE `stock_prices` (
+  `stock_id` int(4) NOT NULL,
+  `date` date NOT NULL,
+  `high` decimal(8,2) NOT NULL,
+  `low` decimal(8,2) NOT NULL,
+  `close` decimal(8,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stock_symbol_list`
 --
 
@@ -173,7 +224,7 @@ CREATE TABLE `stock_symbol_list` (
   `stock_sector` varchar(24) DEFAULT NULL,
   `stock_description` varchar(8192) DEFAULT NULL,
   `stock_currency` varchar(3) NOT NULL,
-  `last_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `last_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -230,6 +281,14 @@ ALTER TABLE `stock_exchanges`
   ADD KEY `stock_exchanges_country_id` (`country_id`);
 
 --
+-- Indexes for table `stock_financials`
+--
+ALTER TABLE `stock_financials`
+  ADD PRIMARY KEY (`stock_id`),
+  ADD KEY `stock_id` (`stock_id`),
+  ADD KEY `stock_financials_currency` (`financial_currency`);
+
+--
 -- Indexes for table `stock_markets`
 --
 ALTER TABLE `stock_markets`
@@ -249,6 +308,12 @@ ALTER TABLE `stock_market_constituents`
 ALTER TABLE `stock_market_prices`
   ADD PRIMARY KEY (`market_price_id`),
   ADD UNIQUE KEY `market_id-date` (`market_id`,`date`) USING BTREE;
+
+--
+-- Indexes for table `stock_prices`
+--
+ALTER TABLE `stock_prices`
+  ADD PRIMARY KEY (`stock_id`,`date`);
 
 --
 -- Indexes for table `stock_symbol_list`
@@ -352,10 +417,22 @@ ALTER TABLE `stock_exchanges`
   ADD CONSTRAINT `stock_exchanges_country_id` FOREIGN KEY (`country_id`) REFERENCES `countries` (`country_id`);
 
 --
+-- Constraints for table `stock_financials`
+--
+ALTER TABLE `stock_financials`
+  ADD CONSTRAINT `stock_financials_stock_id` FOREIGN KEY (`stock_id`) REFERENCES `stock_symbol_list` (`stock_id`) ON UPDATE CASCADE;
+
+--
 -- Constraints for table `stock_markets`
 --
 ALTER TABLE `stock_markets`
   ADD CONSTRAINT `stock_market_exchange` FOREIGN KEY (`exchange_id`) REFERENCES `stock_exchanges` (`exchange_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `stock_prices`
+--
+ALTER TABLE `stock_prices`
+  ADD CONSTRAINT `stock_prices_symbol_id` FOREIGN KEY (`stock_id`) REFERENCES `stock_symbol_list` (`stock_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

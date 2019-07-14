@@ -3,13 +3,13 @@ A web based app designed to keep track of financial information.
 Features:  
 Exchange rate syncing  
 Stock market price syncing  
+Stock price syncing  
 Basic API  
 Mysqli database connector
 
 Future features:  
-GUI
-Stock price syncing
-Fund price syncing 
+GUI  
+Fund price syncing  
 Dividend syncing  
 Stock portfolio management  
 PDO database connector  
