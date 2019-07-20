@@ -13,11 +13,13 @@ final class Stock
     private $sector;
     private $description;
     private $currency;
+    private $market;
     
     public function __construct($stock_id = null)
     {
         $this->conn = Connection::instance();
         $this->stock_id = $stock_id;
+        $this->setMarket();
     }
 
     public function getId() : int
@@ -44,8 +46,8 @@ final class Stock
     {
         return $this->suffix;
     }
-
-    public function getMarket() : string
+    
+    public function getMarket()
     {
         return $this->market;
     }
@@ -75,6 +77,23 @@ final class Stock
         $stmt = $conn->runQuery($query);
 
         return $stmt;
+    }
+
+    private function setMarket()
+    {
+        $query = 'SELECT market_id
+                  FROM stock_market_constituents
+                  WHERE stock_id = ?';
+
+        $params = array($this->stock_id);
+
+        $stmt = $this->conn->runQuery($query, $params);
+        $stmt->bind_result($market_id);
+        $stmt->fetch();
+        
+        if ($market_id !== null) {
+            $this->market = new Market($market_id);
+        }
     }
 }
 

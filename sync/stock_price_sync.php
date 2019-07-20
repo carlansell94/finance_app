@@ -17,7 +17,11 @@ abstract class StockPriceSync extends Sync
 
     public function isMarketOpen(): bool
     {
-        return $this->stock->market->isOpen();
+        if ($this->stock->getMarket() !== null) {
+            return $this->stock->getMarket()->isOpen();
+        }
+        
+        return false;
     }
 
     public function setStartDate()
