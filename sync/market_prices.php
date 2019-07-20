@@ -6,6 +6,8 @@ use Finance\core\Market;
 
 require_once __DIR__ . "/../autoloader.php";
 
+$end_date = date('w');
+
 $stock_market_list = Market::getFullList();
 $stock_market_list->bind_result(
                     $id,
@@ -28,7 +30,11 @@ while ($stock_market_list->fetch()) {
     $sync->setMarket($market);
     $sync->setStartDate();
 
-    if ($sync->isMarketOpen()) {
+    if ($sync->isMarketOpen() || $end_date > 5) {
+        $sync->modifyEndDate('-1 day');
+    }
+    
+    if ($end_date == 6) {
         $sync->modifyEndDate('-1 day');
     }
 
