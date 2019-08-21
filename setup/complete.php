@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <base href="/finance/" target="_blank">
+    <title>Setup Complete - Finance App</title>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+</head>
+<body>
+<div id="content">
+    <div id="top-bar">
+        <h1>Finance App</h1>
+        <h2>Initial Setup</h2>
+    </div>
+    <p>Setup is complete.</p>
+    <p>To re-run setup, click the button below. This will remove the current configuration.</p>
+</div>
+<div class="controls">
+    <button type="button" onclick="window.location.replace('setup/?force=1');">Re-run Setup</button>
+</div>
