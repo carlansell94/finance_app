@@ -7,11 +7,11 @@ use Finance\config\Config;
 http_response_code(422);
 
 $settings = array(
-                 'DB_HOST' => $_GET['hostname'],
-                 'DB_NAME' => $_GET['database'],
-                 'DB_USER' => $_GET['username'],
-                 'DB_PASS' => $_GET['password'],
-                 'SYNC_START_DATE' => $_GET['start_date']
+                 'DB_HOST' => $_POST['hostname'],
+                 'DB_NAME' => $_POST['database'],
+                 'DB_USER' => $_POST['username'],
+                 'DB_PASS' => $_POST['password'],
+                 'SYNC_START_DATE' => $_POST['start_date']
              );
 
 $config = new Config();
@@ -24,7 +24,7 @@ if (!$config->isValid()) {
 
 $schemas[] = 'schema/tables.sql';
 
-if ($_GET['install_data'] == true) {
+if (isset($_POST['install_data'])) {
     $schemas[] = 'schema/data.sql';
 }
 
