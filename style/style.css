@@ -1,6 +1,6 @@
 @font-face {
     font-family: Montserrat;
-    src: url('fonts/Montserrat-Regular.otf');
+    src: url('fonts/Montserrat-Regular.woff2');
 }
 
 body {
@@ -12,30 +12,40 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
     font-family: Montserrat;
+}
+
+h1,
+h2 {
     text-transform: uppercase;
 }
 
 h1 {
     color: #888;
     font-size: 10px;   
-    margin: 0 0 3px;
+    margin: 15px 0 3px;
 }
 
 h2 {
+    border-bottom: 1px solid #777;
     color: #333;
     font-size: 26px;
-    margin: 0 0 8px;
+    margin: 0;
+    padding-bottom: 8px;
 }
 
 h2::first-letter {
     font-size: 32px;
 }
 
-h4 {
-    font-size: 16px;
-    margin: 0;
+h3 {
+    background: #308;
+    border-radius: 5px;
+    color: #fff;
+    margin-top: 30px;
+    padding: 10px;
 }
 
 a {
@@ -45,7 +55,7 @@ a {
 
 table {
     border-collapse: collapse;
-    margin: 20px auto;
+    margin: 10px auto;
     width: 100%;
 }
 
@@ -60,19 +70,18 @@ tbody > tr:nth-child(odd) {
     background: #f6f6f6;
 }
 
+tbody > tr:nth-child(even) {
+    background: #fff;
+}
+
 tr {
     font-size: 14px;
-    line-height: 40px;
-    width: 100%;
+    line-height: 24px;
 }
 
 tr > td,
 tr > th {
-    text-indent: 20px;
-}
-
-tr > td:nth-last-child(1) {
-    padding-right: 20px;
+    padding: 10px 20px;
 }
 
 td > img {
@@ -108,13 +117,6 @@ input {
     resize: none;
 }
 
-#top-bar {
-    border-bottom: 1px solid #777;
-    font-weight: bold;
-    margin-bottom: 25px;
-    padding-top: 15px;
-}
-
 #content {
     color: #668;
     flex: 1;
@@ -126,6 +128,24 @@ input {
     padding: 6px;
     text-align: center;
     width: 100%;
+}
+
+.get,
+.post {
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    line-height: 40px;
+    max-width: 80px;
+    text-align: center;
+}
+
+.get {
+    background: #070;
+}
+
+.post {
+    background: #007bff;
 }
 
 dialog {

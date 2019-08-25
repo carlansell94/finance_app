@@ -38,11 +38,13 @@
     <form id="data-list">
         <table>
             <colgroup>
-                <col style="width: 50%">
-                <col style="width: 50%">
+                <col style="width: 50%" />
+                <col style="width: 50%" />
             </colgroup>
             <thead>
-                <th colspan="2">Database Settings:</th>
+                <tr>
+                    <th colspan="2">Database Settings:</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -62,8 +64,16 @@
                     <td><input type="password" id="password" name="password" title="Password of MySQL user to use for database connection." /></td>
                 </tr>
             </tbody>
+        </table>
+        <table>
+            <colgroup>
+                <col style="width: 50%" />
+                <col style="width: 50%" />
+            </colgroup>
             <thead>
-                <th colspan="2">Sync Settings:</th>
+                <tr>
+                    <th colspan="2">Sync Settings:</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -71,8 +81,16 @@
                     <td><input type="date" id="date" value="2019-01-01" title="Date from which to start syncing data. Recommended to be set a maximum of 5 years in the past, due to limited historical data availability." name="start_date" /></td>
                 </tr>
             </tbody>
+        </table>
+        <table>
+            <colgroup>
+                <col style="width: 50%" />
+                <col style="width: 50%" />
+            </colgroup>
             <thead>
-                <th colspan="2">Sample Data:</th>
+                <tr>
+                    <th colspan="2">Sample Data:</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -87,10 +105,8 @@
     <button onclick="submit()">Submit</button>
 </div>
 <dialog id="dialog">
-    <div id="top-bar">
-        <h1>Finance App</h1>
-        <h2>Initial Setup</h2>
-    </div>
+    <h1>Finance App</h1>
+    <h2>Initial Setup</h2>
     <p></p>
     <div class="controls">
         <button type="button" onclick="dialog.close()">Close</button>

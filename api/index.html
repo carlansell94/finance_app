@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <base href="/finance/" target="_blank">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <title>Finance App - API</title>
+</head>
+<body>
+<div id="content">
+    <div id="top-bar">
+        <h1>API</h1>
+        <h2>Version 1</h2>
+    </div>
+    <h3>Currencies</h3>
+    <table>
+        <colgroup>
+            <col style="width:20%" />
+            <col style="width:100px;text-align:center" />
+            <col />
+            <col style="width:250px" />
+            <col style="width:100px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>URI
+                <th>Header
+                <th>Description
+                <th>Optional Parameters
+                <th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>currencies
+                <td><p class="get">GET</p>
+                <td>Retrieve all currencies tracked by the application.
+                <td>N/A
+                <td><a href="./api/v1/currencies">Example</a>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Exchange Rates</h3>
+    <table>
+        <colgroup>
+            <col style="width:20%" />
+            <col style="width:100px;text-align:center" />
+            <col />
+            <col style="width:250px" />
+            <col style="width:100px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>URI
+                <th>Header
+                <th>Description
+                <th>Optional Parameters
+                <th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>exchange_rates
+                <td><p class="get">GET</p>
+                <td>Retrieve exchange rates for all currency pairs.
+                <td>start_date, end_date
+                <td><a href="./api/v1/exchange_rates">Example</a>
+            </tr>
+            <tr>
+                <td>exchange_rates
+                <td><p class="post">POST
+                <td>Add a single exchange rate with the data provided.
+                <td>N/A
+                <td><a href="./api/v1/exchange_rates/1">Example</a>
+            </tr>
+            <tr>
+                <td>exchange_rates/&#x200b;{ID}
+                <td><p class="get">GET</p>
+                <td>Retrieve the exchange rate with the provided ID.
+                <td>N/A
+                <td><a href="./api/v1/exchange_rates/1">Example</a>
+            </tr>
+            <tr>
+                <td>exchange_rates/&#x200b;{DATE}
+                <td><p class="get">GET</p>
+                <td>Retrieve all exchange rates for the provided date,
+                <td>N/A
+                <td><a href="./api/v1/exchange_rates/2019-01-01">Example</a>
+            </tr>
+            <tr>
+                <td>exchange_rates/&#x200b;{CUR}
+                <td><p class="get">GET</p>
+                <td>Retrieve exchange rates for the provided currency.
+                <td>start_date, end_date
+                <td><a href="./api/v1/exchange_rates/GBP">Example</a>
+            </tr>
+            <tr>
+                <td>exchange_rates/&#x200b;{CUR-CUR}
+                <td><p class="get">GET</p>
+                <td>Retrieve exchange rates for the provided currency pair.
+                <td>start_date, end_date
+                <td><a href="./api/v1/exchange_rates/GBP-EUR">Example</a>
+            </tr>
+            <tr>
+                <td>exchange_rates/&#x200b;summary
+                <td><p class="get">GET</p>
+                <td>Retrieve the most recent exchange rate of a currency pair, and the change from the previous day.
+                <td>N/A
+                <td><a href="./api/v1/exchange_rates/summary">Example</a>
+            </tr>
+            <tr>
+                <td>exchange_rates/&#x200b;summary/&#x200b;major
+                <td><p class="get">GET</p>
+                <td>Retrieve the most recent exchange rate of a currency pair, and the change from the previous day. Only returns rank 1 currencies (GBP, EUR, USD).
+                <td>N/A
+                <td><a href="./api/v1/exchange_rates/summary/major">Example</a>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Stock Markets</h3>
+    <table>
+        <colgroup>
+            <col style="width:20%" />
+            <col style="width:100px;text-align:center" />
+            <col />
+            <col style="width:250px" />
+            <col style="width:100px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>URI
+                <th>Header
+                <th>Description
+                <th>Optional Parameters
+                <th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>markets</td>
+                <td><p class="get">GET</p></td>
+                <td>Retrieve all stock markets tracked by the application.</td>
+                <td>N/A</td>
+                <td><a href="./api/v1/markets">Example</a></td>
+            </tr>
+            <tr>
+                <td>markets/&#x200b;{SYMBOL}/&#x200b;constituents</td>
+                <td><p class="get">GET</p></td>
+                <td>Retrieve the constituent stock symbols which form the provided stock market.</td>
+                <td>N/A</td>
+                <td><a href="./api/v1/markets/FTSE/constituents">Example</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
