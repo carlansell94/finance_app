@@ -50,9 +50,37 @@ final class Config
         return file_put_contents(__DIR__ . '/config.ini', $out);
     }
 
+    public function load()
+    {
+        if (!file_exists(__DIR__ . '/config.ini')) {
+            return false;
+        }
+
+        $this->config = parse_ini_file(__DIR__ . '/config.ini');
+
+        foreach ($this->config as $key => $value) {
+            define($key, $value);
+        }
+
+        return true;
+    }
+
     public function remove()
     {
         unlink(__DIR__ . '/config.ini');
+    }
+
+    public function test()
+    {
+        $required = array('DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME', 'SYNC_START_DATE');
+
+        foreach ($required as $constant) {
+            if (!defined($constant) || $constant == '') {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 

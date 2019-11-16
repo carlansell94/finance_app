@@ -3,7 +3,8 @@
 namespace Finance\core;
 
 require_once __DIR__ . '/../autoloader.php';
-require_once __DIR__ . '/../config/db.php';
+
+use Finance\config\Config;
 
 final class Connection implements IConnection
 {
@@ -12,7 +13,13 @@ final class Connection implements IConnection
 
     protected function __construct()
     {
-        $this->conn = new \mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        $config = new Config();
+
+        if ($config->load() == true && $config->test() == true) {
+            $this->conn = new \mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        } else {
+            return false;
+        }
     }
 
     public static function instance(): Connection
