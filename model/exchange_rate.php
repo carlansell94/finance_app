@@ -1,8 +1,8 @@
 <?php
 
-namespace Finance\core;
+namespace Finance\model;
 
-require_once __DIR__ . '/../autoloader.php';
+use Finance\core\{Connection, Currency};
 
 final class ExchangeRate
 {
@@ -20,7 +20,7 @@ final class ExchangeRate
 
     public function setId(int $id): ExchangeRate
     {
-        $this->id = $id;
+        $this->currency_id = $id;
 
         return $this;
     }
@@ -122,12 +122,12 @@ final class ExchangeRate
         }
 
         if (isset($values)) {
-            array_unshift($values, $currency->getId());
-            array_unshift($values, $currency->getId());
+            array_unshift($values, $currency->currency_id);
+            array_unshift($values, $currency->currency_id);
         } else {
             $values = array(
-                          $currency->getId(),
-                          $currency->getId()
+                          $currency->currency_id,
+                          $currency->currency_id
                       );
         }
 

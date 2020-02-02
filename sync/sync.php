@@ -5,7 +5,6 @@ namespace Finance\sync;
 use Finance\core\Connection;
 
 require_once __DIR__ . '/../autoloader.php';
-require_once __DIR__ . '/../config/sync.php';
 
 abstract class Sync
 {

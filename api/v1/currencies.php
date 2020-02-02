@@ -2,7 +2,7 @@
 
 namespace Finance\api\v1;
 
-use Finance\core\Currency;
+use Finance\model\Currency;
 
 require_once __DIR__ . '/../../autoloader.php';
 
@@ -36,17 +36,16 @@ function getCurrencies($request_path)
         return $result;
     }
 
-    $stmt = Currency::getFullList();
-    $stmt->bind_result($iso_code, $name, $ranking, $flag, $symbol, $symbol_minor);
-    $stmt->store_result();
+    $model = new \Finance\model\Currency;
+    $currencies = $model->get();
 
-    while ($stmt->fetch()) {
-        $result_data['iso_code'] = $iso_code;
-        $result_data['name'] = $name;
-        $result_data['ranking'] = $ranking;
-        $result_data['flag'] = base64_encode($flag);
-        $result_data['symbol'] = $symbol;
-        $result_data['symbol_minor'] = $symbol_minor;
+    while ($currency = $currencies->fetch_object("\Finance\core\Currency")) {
+        $result_data['iso_code'] = $currency->iso_code;
+        $result_data['name'] = $currency->name;
+        $result_data['ranking'] = $currency->ranking_id;
+        $result_data['flag'] = $currency->getCountryFlag();
+        $result_data['symbol'] = $currency->symbol;
+        $result_data['symbol_minor'] = $currency->symbol_minor;
 
         $result['data'][] = $result_data;
     }

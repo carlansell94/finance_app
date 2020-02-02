@@ -1,8 +1,6 @@
 <?php
 
-namespace Finance\sync;
-
-require_once __DIR__ . '/../autoloader.php';
+namespace Finance\sync\ExchangeRates;
 
 final class ExchangeRateSource
 {
@@ -11,4 +9,3 @@ final class ExchangeRateSource
         return new ExchangeRateSourceXe();
     }
 }
-
