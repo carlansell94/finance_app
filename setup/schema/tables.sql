@@ -19,6 +19,16 @@ CREATE TABLE `currency_rates` (
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE IF EXISTS `cryptocurrency_rates`;
+CREATE TABLE `cryptocurrency_rates` (
+  `crypto_rate_id` mediumint(8) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `crypto_id` tinyint(3) UNSIGNED NOT NULL,
+  `currency_id` tinyint(3) UNSIGNED NOT NULL,
+  `rate` decimal(12,6) NOT NULL,
+  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 DROP TABLE IF EXISTS `issue_tracker`;
 CREATE TABLE `issue_tracker` (
   `issue_id` smallint(6) UNSIGNED NOT NULL,
@@ -73,6 +83,15 @@ CREATE TABLE `currencies` (
   `country_id` tinyint(3) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE IF EXISTS `cryptocurrencies`;
+CREATE TABLE `cryptocurrencies` (
+  `crypto_id` tinyint(3) UNSIGNED NOT NULL,
+  `symbol` varchar(4) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `icon` mediumblob DEFAULT NULL,
+  `creation_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 DROP TABLE IF EXISTS `stock_markets`;
 CREATE TABLE `stock_markets` (
   `market_id` tinyint(3) UNSIGNED NOT NULL,
@@ -120,6 +139,14 @@ CREATE TABLE `ranking` (
 
 ALTER TABLE `countries`
   ADD PRIMARY KEY (`country_id`);
+
+ALTER TABLE `cryptocurrencies`
+  ADD PRIMARY KEY (`crypto_id`);
+
+ALTER TABLE `cryptocurrency_rates`
+  ADD PRIMARY KEY (`crypto_rate_id`),
+  ADD KEY `cryptocurrency_rates_crypto_id` (`crypto_id`),
+  ADD KEY `cryptocurrency_rates_currency_id` (`currency_id`);
 
 ALTER TABLE `currencies`
   ADD PRIMARY KEY (`currency_id`) USING BTREE,
@@ -169,6 +196,12 @@ ALTER TABLE `stock_symbol_list`
 ALTER TABLE `countries`
   MODIFY `country_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `cryptocurrencies`
+  MODIFY `crypto_id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cryptocurrency_rates`
+  MODIFY `crypto_rate_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 ALTER TABLE `currency_rates`
   MODIFY `currency_rate_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 
@@ -204,6 +237,10 @@ ALTER TABLE `currencies`
 ALTER TABLE `currency_rates`
   ADD CONSTRAINT `currency_rates_currency_1` FOREIGN KEY (`currency_1`) REFERENCES `currencies` (`currency_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `currency_rates_currency_2` FOREIGN KEY (`currency_2`) REFERENCES `currencies` (`currency_id`) ON UPDATE CASCADE;
+
+ALTER TABLE `cryptocurrency_rates`
+  ADD CONSTRAINT `cryptocurrency_rates_crypto_id` FOREIGN KEY (`crypto_id`) REFERENCES `cryptocurrencies` (`crypto_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `cryptocurrency_rates_currency_id` FOREIGN KEY (`currency_id`) REFERENCES `currencies` (`currency_id`) ON UPDATE CASCADE;
 
 ALTER TABLE `issue_tracker`
   ADD CONSTRAINT `issue_tracker_issue_type_id` FOREIGN KEY (`issue_type`) REFERENCES `issue_types` (`issue_type_id`) ON UPDATE CASCADE;
