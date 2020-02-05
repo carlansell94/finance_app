@@ -24,7 +24,7 @@ abstract class Issue extends \Exception
         return $this;
     }
 
-    public function setParams(array $params): Issue
+    public function setParams(array $params = null): Issue
     {
         $this->params = json_encode($params, JSON_FORCE_OBJECT);
         return $this;
