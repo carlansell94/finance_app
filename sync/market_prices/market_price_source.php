@@ -1,8 +1,6 @@
 <?php
 
-namespace Finance\sync;
-
-require_once __DIR__ . '/../autoloader.php';
+namespace Finance\sync\MarketPrices;
 
 final class MarketPriceSource
 {

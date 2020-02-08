@@ -1,19 +1,19 @@
 <?php
 
-namespace Finance\core;
+namespace Finance\model;
 
-require_once __DIR__ . '/../autoloader.php';
+use Finance\core\{Connection, Market};
 
 class MarketPrice
 {
-    private $conn;
-    private $market;
-    private $date;
-    private $price;
-
-    public function __construct(Market $market) {
+    public function __construct() {
         $this->conn = Connection::instance();
+    }
+
+    public function setMarket(Market $market): MarketPrice {
         $this->market = $market;
+
+        return $this;
     }
 
     public function setPrice($date, $price): MarketPrice
@@ -34,7 +34,7 @@ class MarketPrice
                   VALUES (?, ?, ?)";
 
         $values = array(
-                      $this->market->getId(),
+                      $this->market->market_id,
                       $this->date,
                       $this->price
                   );
@@ -42,20 +42,6 @@ class MarketPrice
         $result = $this->conn->runQuery($query, $values);
 
         return $result;
-    }
-
-    public static function getAll()
-    {
-        $query = "SELECT
-                      date,
-                      market_name,
-                      price
-                  FROM stock_market_prices
-                  JOIN stock_markets USING (market_id)";
-
-        $stmt = $this->conn->runQuery($query);
-        
-        return $stmt;
     }
 }
 
